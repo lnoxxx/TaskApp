@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvBackgroundEt"
+        style="@style/BaseCardViewStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="?attr/colorSurfaceContainerHigh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etTagName"
+            style="@style/BaseTextStyle.regular"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="none"
+            android:background="@android:color/transparent"
+            android:hint="@string/hint_task_name"
+            android:imeOptions="actionDone"
+            android:inputType="text|textAutoComplete|textAutoCorrect|textCapSentences|textImeMultiLine"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:textSize="20sp" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvError"
+        style="@style/BaseTextStyle.regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="4dp"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="8dp"
+        android:textColor="?attr/colorError"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:drawableStartCompat="@drawable/ic_error"
+        app:drawableTint="?attr/colorError"
+        app:layout_constraintEnd_toEndOf="@id/cvBackgroundEt"
+        app:layout_constraintStart_toStartOf="@id/cvBackgroundEt"
+        app:layout_constraintTop_toBottomOf="@id/cvBackgroundEt"
+        tools:text="Tag name must not be null!" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTagColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvError" />
+
+    <Button
+        android:id="@+id/btnPositive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/add_tag_dialog_add"
+        app:icon="@drawable/ic_done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvTagColor" />
+
+    <Button
+        android:id="@+id/btnNegative"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/cancel"
+        app:layout_constraintEnd_toStartOf="@id/btnPositive"
+        app:layout_constraintTop_toTopOf="@id/btnPositive" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

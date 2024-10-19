@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/cvCalendar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/calendarCard" />
+
+        <Constraint
+            android:id="@+id/calendarCard"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Constraint
+            android:id="@+id/ivIconOpenCalendar"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:contentDescription="@string/cd_calendar"
+            android:padding="14dp"
+            android:src="@drawable/ic_calendar_menu"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/calendarCard"
+            app:layout_constraintEnd_toEndOf="@id/calendarCard" />
+
+        <Constraint
+            android:id="@+id/ivIconCloseCalendar"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:contentDescription="@string/cd_close"
+            android:padding="24dp"
+            android:src="@drawable/ic_close"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/cvCalendar"
+            app:layout_constraintStart_toStartOf="@id/cvCalendar" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/cvCalendar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/calendarCard" />
+
+        <Constraint
+            android:id="@+id/calendarCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivIconCloseCalendar" />
+
+        <Constraint
+            android:id="@+id/ivIconOpenCalendar"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:contentDescription="@string/cd_calendar"
+            android:src="@drawable/ic_calendar_menu"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/calendarCard"
+            app:layout_constraintEnd_toEndOf="@id/calendarCard" />
+
+        <Constraint
+            android:id="@+id/ivIconCloseCalendar"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:contentDescription="@string/cd_close"
+            android:padding="24dp"
+            android:src="@drawable/ic_close"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/cvCalendar"
+            app:layout_constraintStart_toStartOf="@id/cvCalendar" />
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@+id/start"
+        app:duration="200"
+        app:motionInterpolator="easeInOut" />
+</MotionScene>

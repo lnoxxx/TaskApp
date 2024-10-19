@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    TOOLBAR-->
+
+    <style name="BaseToolBarStyle">
+
+    </style>
+
+    <style name="BaseToolBarStyle.Centered">
+        <item name="titleCentered">true</item>
+    </style>
+
+<!--    CARDS-->
+
+    <style name="BaseCardViewStyle">
+        <item name="cardCornerRadius">32dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">?attr/colorSurfaceContainer</item>
+    </style>
+
+    <style name="BaseCardViewStyle.OnSurfaceHigh">
+        <item name="cardBackgroundColor">?attr/colorSurfaceContainerHigh</item>
+    </style>
+
+    <style name="BaseCardViewStyle.Outlined" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardCornerRadius">32dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">?attr/colorSurfaceContainer</item>
+    </style>
+
+    <style name="BaseCardViewStyle.Filled" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">32dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">?attr/colorSurfaceContainer</item>
+    </style>
+
+    <style name="BaseCardViewStyle.Elevated" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">32dp</item>
+        <item name="cardElevation">6dp</item>
+        <item name="cardBackgroundColor">?attr/colorSurfaceContainer</item>
+    </style>
+<!--    TEXT-->
+
+    <style name="BaseTextStyle">
+        <item name="fontFamily">@font/app_medium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="BaseTextStyle.light">
+        <item name="fontFamily">@font/app_light</item>
+    </style>
+
+    <style name="BaseTextStyle.bold">
+        <item name="fontFamily">@font/app_bold</item>
+    </style>
+
+    <style name="BaseTextStyle.black">
+        <item name="fontFamily">@font/app_black</item>
+    </style>
+
+    <style name="BaseTextStyle.regular">
+        <item name="fontFamily">@font/app_regular</item>
+    </style>
+
+    <style name="BaseTextStyle.thin">
+        <item name="fontFamily">@font/app_thin</item>
+    </style>
+
+<!--    RADIO BUTTON-->
+
+    <style name="BaseRadioButtonStyle">
+        <item name="android:paddingHorizontal">8dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+<!--    BOTTOM SHEET-->
+
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
+    <style name="ModalBottomSheetDialog" parent="Widget.Material3.BottomSheet.Modal">
+
+    </style>
+
+</resources>

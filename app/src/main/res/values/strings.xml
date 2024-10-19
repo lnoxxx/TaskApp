@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Diary</string>
+
+    <string name="nav_title_tasks">Tasks</string>
+    <string name="nav_title_notes">Notes</string>
+    <string name="nav_title_add_task">Create task</string>
+    <string name="cd_add">Add task</string>
+    <string name="cd_selectDate">Select date</string>
+    <string name="fab_select_date">Select date</string>
+    <string name="cd_month_image">Month image</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+    <string name="unknown_month">Unknown</string>
+    <string name="cd_close">Close</string>
+    <string name="hint_task_name">Name</string>
+    <string name="add_task_select_date">Date</string>
+    <string name="add_task_select_time">Time</string>
+    <string name="add_task_all_day">For the whole day</string>
+    <string name="add_task_reminder">Reminder</string>
+    <string name="add_task_on_reminder">Turn on reminder</string>
+    <string name="add_task_select_tag">Select tag:</string>
+    <string name="add_tag">Create tag</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_tag_dialog_add">Create</string>
+    <string name="add_tag_dialog_title">Create tag</string>
+    <string name="error_empty_name">Enter the name!</string>
+    <string name="error_long_name">The title is too long!</string>
+    <string name="error_short_name">The title is too short!</string>
+    <string name="add_task_save_button">Save</string>
+    <string name="reminder_1hour">1 hour</string>
+    <string name="reminder_2hour">2 hours</string>
+    <string name="reminder_12hour">12 hours</string>
+    <string name="reminder_day">Day</string>
+    <string name="reminder_none">None</string>
+
+    <string name="week_day_1_monday">Monday</string>
+    <string name="week_day_2_tuesday">Tuesday</string>
+    <string name="week_day_3_wednesday">Wednesday</string>
+    <string name="week_day_4_thursday">Thursday</string>
+    <string name="week_day_5_friday">Friday</string>
+    <string name="week_day_6_saturday">Saturday</string>
+    <string name="week_day_7_sunday">Sunday</string>
+    <string name="unknown_week">Unknown</string>
+
+    <string name="pref_remember_notification_allow">notifallow</string>
+
+    <string name="notification_permission_required">Please grant notification permissions to be reminded of your tasks.</string>
+    <string name="allow">Allow</string>
+    <string name="notification_dont_remember">Don\'t remind me</string>
+    <string name="notification_permission_dialog_title">Allow notifications!</string>
+
+    <string name="add_task_reminder_delay">Reminder in: %1$sd, %2$sh, %3$sm</string>
+    <string name="today">Today</string>
+    <string name="new_week">New week</string>
+    <string name="day_task_empty">You have no tasks for today!</string>
+    <string name="fab_today">Today</string>
+    <string name="menu_calendar">Calendar</string>
+    <string name="cd_calendar">Calendar</string>
+</resources>
