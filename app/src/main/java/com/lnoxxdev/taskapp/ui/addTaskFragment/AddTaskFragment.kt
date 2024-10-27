@@ -1,71 +1,82 @@
 package com.lnoxxdev.taskapp.ui.addTaskFragment
 
+import android.animation.ObjectAnimator
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.widget.FrameLayout
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.lnoxxdev.data.DateTimeManager
 import com.lnoxxdev.taskapp.R
-import com.lnoxxdev.taskapp.databinding.BottomSheetAddTaskBinding
+import com.lnoxxdev.taskapp.databinding.FragmentAddTaskBinding
+import com.lnoxxdev.taskapp.ui.addTaskFragment.rvSelectTag.ItemDecorationAddTaskTags
 import com.lnoxxdev.taskapp.ui.addTaskFragment.rvSelectTag.RvAdapterTags
 import com.lnoxxdev.taskapp.ui.addTaskFragment.rvSelectTag.SelectTagRvListener
+import com.lnoxxdev.taskapp.ui.uiDecorManagers.AppColorManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddTaskBottomSheet : BottomSheetDialogFragment(), SelectTagRvListener {
+class AddTaskFragment : Fragment(), SelectTagRvListener {
 
-    private var _binding: BottomSheetAddTaskBinding? = null
+    private var _binding: FragmentAddTaskBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("AddTaskFragmentBinding null")
 
-    private val viewmodel: AddTaskViewModel by viewModels()
+    private val args: AddTaskFragmentArgs by navArgs()
+    private val viewmodel: AddTaskViewModel by lazy {
+        val viewmodel: AddTaskViewModel by viewModels()
+        val date = LocalDate.of(args.year, args.month, args.day)
+        viewmodel.initByDate(date)
+        viewmodel
+    }
 
-    private var adapter: RvAdapterTags? = null
+    @Inject
+    lateinit var dateTimeManager: DateTimeManager
+
+    private var adapter: RvAdapterTags = RvAdapterTags(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = BottomSheetAddTaskBinding.inflate(inflater)
+        _binding = FragmentAddTaskBinding.inflate(inflater)
         lifecycleScope.launch {
             viewmodel.uiState.collect { uiState ->
                 bindUiState(uiState)
             }
         }
+        binding.mainLayout.setOnApplyWindowInsetsListener { v, insets ->
+            val inset = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            v.updatePadding(top = inset.top)
+            insets
+        }
+        recyclerViewInit()
+        changeNameTextViewColor(null)
+        binding.tvError.visibility = View.GONE
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Bottom sheet behavior
-        val bottomSheet: FrameLayout =
-            dialog?.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
-        bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-        val behavior = BottomSheetBehavior.from(bottomSheet)
-        behavior.apply {
-            isDraggable = false
-            state = BottomSheetBehavior.STATE_EXPANDED
-        }
-
         //on click listeners
         binding.tvTaskDate.setOnClickListener {
             showDatePicker()
@@ -83,14 +94,14 @@ class AddTaskBottomSheet : BottomSheetDialogFragment(), SelectTagRvListener {
             val name = binding.etTaskName.text.toString()
             val error = viewmodel.saveTask(name)
             if (error == null) {
-                dialog?.dismiss()
+                findNavController().navigateUp()
             } else {
                 showError(error)
             }
         }
         //close icon
         binding.ivIconClose.setOnClickListener {
-            dialog?.dismiss()
+            findNavController().navigateUp()
         }
         setRadioButtonClickListeners()
     }
@@ -100,7 +111,7 @@ class AddTaskBottomSheet : BottomSheetDialogFragment(), SelectTagRvListener {
         bindUiState(viewmodel.uiState.value)
     }
 
-    private fun bindUiState(uiState: AddTaskViewModel.AddTaskUiState) {
+    private fun bindUiState(uiState: AddTaskUiState) {
         bindDate(uiState.date)
         bindTime(uiState.time, uiState.isAllDayTask)
         uiState.tags?.let {
@@ -111,36 +122,44 @@ class AddTaskBottomSheet : BottomSheetDialogFragment(), SelectTagRvListener {
     }
 
     private fun bindDate(date: LocalDate) {
-        val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+        val dateFormatter = dateTimeManager.getDateFormatter()
         val dateText = date.format(dateFormatter)
         binding.tvTaskDate.text = dateText
     }
 
     private fun bindTime(time: LocalTime, isAllDayTask: Boolean) {
-        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+        val timeFormatter = dateTimeManager.getTimeFormatter()
         val timeText = time.format(timeFormatter)
         binding.tvTaskTime.text = timeText
         if (isAllDayTask) {
+            hideTaskTime()
+        } else {
+            showTaskTime()
+        }
+    }
+
+    private fun showTaskTime() {
+        binding.tvTaskTime.animate().apply {
+            binding.tvTaskTime.visibility = View.VISIBLE
             binding.tvTaskTime.animate().apply {
+                scaleX(1f)
+                scaleY(1f)
                 duration = 100
                 interpolator = DecelerateInterpolator()
-                scaleX(0.9f)
-                scaleY(0.9f)
-                alpha(0f)
-                withEndAction {
-                    binding.tvTaskTime.visibility = View.GONE
-                }
+                alpha(1f)
             }
-        } else {
-            binding.tvTaskTime.animate().apply {
-                binding.tvTaskTime.visibility = View.VISIBLE
-                binding.tvTaskTime.animate().apply {
-                    scaleX(1f)
-                    scaleY(1f)
-                    duration = 100
-                    interpolator = DecelerateInterpolator()
-                    alpha(1f)
-                }
+        }
+    }
+
+    private fun hideTaskTime() {
+        binding.tvTaskTime.animate().apply {
+            duration = 100
+            interpolator = DecelerateInterpolator()
+            scaleX(0.9f)
+            scaleY(0.9f)
+            alpha(0f)
+            withEndAction {
+                binding.tvTaskTime.visibility = View.GONE
             }
         }
     }
@@ -161,46 +180,35 @@ class AddTaskBottomSheet : BottomSheetDialogFragment(), SelectTagRvListener {
         )
     }
 
-    private fun bindTagList(
-        tagList: List<AddTaskViewModel.UiTag>,
-        selectedTag: AddTaskViewModel.UiTag?,
-    ) {
-        if (adapter == null) {
-            adapter = RvAdapterTags(tagList, this)
-            binding.rvSelectTag.adapter = adapter
-            val flexboxLayoutManager = FlexboxLayoutManager(context)
-            flexboxLayoutManager.apply {
-                flexDirection = FlexDirection.ROW
-                flexWrap = FlexWrap.WRAP
-            }
-            binding.rvSelectTag.layoutManager = flexboxLayoutManager
-        } else {
-            adapter!!.updateData(tagList, selectedTag)
+    private fun recyclerViewInit() {
+        val flexboxLayoutManager = FlexboxLayoutManager(context)
+        flexboxLayoutManager.apply {
+            flexDirection = FlexDirection.ROW
+            flexWrap = FlexWrap.WRAP
         }
+        binding.rvSelectTag.layoutManager = flexboxLayoutManager
+        binding.rvSelectTag.addItemDecoration(ItemDecorationAddTaskTags())
+        binding.rvSelectTag.itemAnimator = null // fuck this >:(
+        binding.rvSelectTag.adapter = adapter
     }
 
-    private fun bindRadioButton(time: AddTaskViewModel.UiReminderTime) {
+    private fun bindTagList(tagList: List<UiTag>, selectedTag: UiTag?) {
+        adapter.updateData(tagList, selectedTag)
+    }
+
+    private fun bindRadioButton(time: UiReminderTime) {
         val radioButton = when (time) {
-            AddTaskViewModel.UiReminderTime.HOUR1 -> binding.rb1Hour
-            AddTaskViewModel.UiReminderTime.HOUR2 -> binding.rb2Hour
-            AddTaskViewModel.UiReminderTime.HOUR12 -> binding.rb12Hour
-            AddTaskViewModel.UiReminderTime.DAY -> binding.rbDay
-            AddTaskViewModel.UiReminderTime.NONE -> binding.rbNone
+            UiReminderTime.MINUTE5 -> binding.rb5Minutes
+            UiReminderTime.HOUR1 -> binding.rb1Hour
+            UiReminderTime.HOUR2 -> binding.rb2Hour
+            UiReminderTime.HOUR12 -> binding.rb12Hour
+            UiReminderTime.DAY -> binding.rbDay
+            UiReminderTime.NONE -> binding.rbNone
         }
         radioButton.isChecked = true
     }
 
     private fun showError(error: Int) {
-        binding.etTaskName.animate().apply {
-            duration = 50
-            translationX(-10f)
-            withEndAction {
-                binding.etTaskName.animate().apply {
-                    duration = 50
-                    translationX(0f)
-                }
-            }
-        }
         binding.tvError.text = getString(error)
         binding.tvError.visibility = View.VISIBLE
     }
@@ -225,27 +233,29 @@ class AddTaskBottomSheet : BottomSheetDialogFragment(), SelectTagRvListener {
             .setSelection(viewmodel.uiState.value.dateEpochMilli).build()
         datePicker.show(childFragmentManager, null)
         datePicker.addOnPositiveButtonClickListener {
-            val instant = Instant.ofEpochMilli(it)
-            val localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate()
-            viewmodel.changeTaskDate(localDate, it)
+            val date = dateTimeManager.getDateFromEpochMilli(it)
+            viewmodel.changeTaskDate(date, it)
         }
     }
 
     private fun setRadioButtonClickListeners() {
         binding.rbNone.setOnClickListener {
-            viewmodel.changeReminderTime(AddTaskViewModel.UiReminderTime.NONE)
+            viewmodel.changeReminderTime(UiReminderTime.NONE)
         }
         binding.rbDay.setOnClickListener {
-            viewmodel.changeReminderTime(AddTaskViewModel.UiReminderTime.DAY)
+            viewmodel.changeReminderTime(UiReminderTime.DAY)
+        }
+        binding.rb5Minutes.setOnClickListener {
+            viewmodel.changeReminderTime(UiReminderTime.MINUTE5)
         }
         binding.rb1Hour.setOnClickListener {
-            viewmodel.changeReminderTime(AddTaskViewModel.UiReminderTime.HOUR1)
+            viewmodel.changeReminderTime(UiReminderTime.HOUR1)
         }
         binding.rb2Hour.setOnClickListener {
-            viewmodel.changeReminderTime(AddTaskViewModel.UiReminderTime.HOUR2)
+            viewmodel.changeReminderTime(UiReminderTime.HOUR2)
         }
         binding.rb12Hour.setOnClickListener {
-            viewmodel.changeReminderTime(AddTaskViewModel.UiReminderTime.HOUR12)
+            viewmodel.changeReminderTime(UiReminderTime.HOUR12)
         }
     }
 
@@ -253,8 +263,42 @@ class AddTaskBottomSheet : BottomSheetDialogFragment(), SelectTagRvListener {
         findNavController().navigate(R.id.addTagDialog)
     }
 
-    override fun changeSelectedTag(tag: AddTaskViewModel.UiTag?) {
+    override fun changeSelectedTag(tag: UiTag?) {
         viewmodel.changeSelectedTag(tag)
+        changeNameTextViewColor(tag?.color)
+    }
+
+    private fun changeNameTextViewColor(color: AppColorManager.TagColor?) {
+        val colorContainer: Int
+        val colorText: Int
+        val colorHint: Int
+
+        if (color != null) {
+            colorContainer = resources.getColor(color.colorContainerId, context?.theme)
+            colorText = resources.getColor(color.colorOnContainerId, context?.theme)
+            colorHint = resources.getColor(color.colorVariant, context?.theme)
+        } else {
+            colorContainer = AppColorManager.getThemeColor(
+                requireContext(),
+                AppColorManager.noTagColorContainerId
+            )
+            colorText = AppColorManager.getThemeColor(
+                requireContext(),
+                AppColorManager.noTagColorOnContainerId
+            )
+            colorHint =
+                AppColorManager.getThemeColor(requireContext(), AppColorManager.noTagColorVariantId)
+        }
+
+        ObjectAnimator.ofArgb(
+            binding.cvTaskName,
+            "cardBackgroundColor",
+            binding.cvTaskName.cardBackgroundColor.defaultColor, colorContainer
+        ).start()
+
+        binding.cvTaskName.setStrokeColor(ColorStateList.valueOf(colorHint))
+        binding.etTaskName.setTextColor(colorText)
+        binding.etTaskName.setHintTextColor(colorHint)
     }
 
 }

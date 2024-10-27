@@ -39,4 +39,22 @@ object AppMonthManager {
             else -> R.string.unknown_month
         }
     }
+
+    fun getDescriptionOfMonth(month: Int): Int{
+        return when (month) {
+            1 -> R.string.january_description
+            2 -> R.string.february_description
+            3 -> R.string.march_description
+            4 -> R.string.april_description
+            5 -> R.string.may_description
+            6 -> R.string.june_description
+            7 -> R.string.july_description
+            8 -> R.string.august_description
+            9 -> R.string.september_description
+            10 -> R.string.october_description
+            11 -> R.string.november_description
+            12 -> R.string.december_description
+            else -> R.string.unknown_month
+        }
+    }
 }

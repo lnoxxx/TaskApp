@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvColorBackground"
-        style="@style/BaseCardViewStyle"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:cardBackgroundColor="?attr/colorOnSurfaceVariant" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvColor"
-        style="@style/BaseCardViewStyle"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_gravity="center"
-        app:cardBackgroundColor="@color/colorCustomColor1Container" />
-
-</FrameLayout>
+    android:id="@+id/cvColor"
+    style="@style/BaseCardViewStyle.Outlined"
+    android:layout_width="36dp"
+    android:layout_height="36dp"
+    android:contentDescription="@string/cd_color"
+    app:cardBackgroundColor="@color/colorCustomColor1Container"
+    app:cardCornerRadius="128dp"
+    app:strokeColor="?attr/colorOnSurfaceVariant"
+    app:strokeWidth="2dp" />

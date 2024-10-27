@@ -4,4 +4,8 @@
     <string name="notification_channel_description">Reminders for your tasks</string>
     <string name="notification_title">Don\'t forget!</string>
     <string name="notification_default_text">We remind you of your tasks!</string>
+
+    <string name="error_empty_name">Enter the name!</string>
+    <string name="error_long_name">Name is too long!</string>
+    <string name="error_short_name">Name is too short!</string>
 </resources>

@@ -143,4 +143,10 @@ class TasksViewModel @Inject constructor(
     fun scrollFinish() {
         dataRepository.dateSelected()
     }
+
+    fun deleteTask(task: UiTask) {
+        CoroutineScope(Dispatchers.IO).launch {
+            tasksRepository.delete(task.id)
+        }
+    }
 }

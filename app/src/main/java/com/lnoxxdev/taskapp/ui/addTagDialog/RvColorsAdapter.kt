@@ -10,10 +10,6 @@ import com.lnoxxdev.taskapp.R
 import com.lnoxxdev.taskapp.databinding.ItemColorBinding
 import com.lnoxxdev.taskapp.ui.uiDecorManagers.AppColorManager
 
-interface ColorSelectedListener {
-    fun selectColor(color: AppColorManager.TagColor)
-}
-
 class RvColorsAdapter(private val listener: ColorSelectedListener) :
     RecyclerView.Adapter<RvColorsAdapter.ViewHolderColor>() {
 
@@ -39,12 +35,7 @@ class RvColorsAdapter(private val listener: ColorSelectedListener) :
             }
             // set color
             val color =
-                if (colorItem != AppColorManager.TagColor.COLOR0) itemView.resources.getColor(
-                    colorItem.colorContainerId,
-                    itemView.context.theme
-                ) else {
-                    AppColorManager.getThemeColor(itemView.context, colorItem.colorContainerId)
-                }
+                itemView.resources.getColor(colorItem.colorContainerId, itemView.context.theme)
             binding.cvColor.setCardBackgroundColor(color)
             //click listener
             itemView.setOnClickListener {

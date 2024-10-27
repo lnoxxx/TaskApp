@@ -1,8 +1,8 @@
 package com.lnoxxdev.taskapp.ui.addTaskFragment.rvSelectTag
 
-import com.lnoxxdev.taskapp.ui.addTaskFragment.AddTaskViewModel
+import com.lnoxxdev.taskapp.ui.addTaskFragment.UiTag
 
 interface SelectTagRvListener {
     fun createNewTag()
-    fun changeSelectedTag(tag: AddTaskViewModel.UiTag?)
+    fun changeSelectedTag(tag: UiTag?)
 }

@@ -9,7 +9,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lnoxxdev.data.appDatabase.Tag
 import com.lnoxxdev.data.tagRepository.TagRepository
 import com.lnoxxdev.taskapp.R
 import com.lnoxxdev.taskapp.databinding.DialogAddTagBinding
@@ -20,9 +19,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+//TODO to mvvm?
 @AndroidEntryPoint
 class AddTagDialog : DialogFragment(), ColorSelectedListener {
-
     @Inject
     lateinit var tagRepository: TagRepository
 
@@ -41,12 +40,13 @@ class AddTagDialog : DialogFragment(), ColorSelectedListener {
             AppCompatResources.getDrawable(requireContext(), R.drawable.shape_dialog_background)
         dialog.apply {
             setTitle(R.string.add_tag_dialog_title)
-            setIcon(R.drawable.ic_add_tag)
+            setIcon(R.drawable.ic_add_tag_dialog)
             setView(binding.root)
             setBackground(background)
         }
+        binding.tvError.visibility = View.GONE
         initRv()
-        selectColor(AppColorManager.TagColor.COLOR0)
+        selectColor(AppColorManager.TagColor.COLOR1)
         val createdDialog = dialog.create()
         //click listeners
         binding.btnNegative.setOnClickListener {
@@ -60,7 +60,7 @@ class AddTagDialog : DialogFragment(), ColorSelectedListener {
 
     private fun createTag(dialog: Dialog) {
         val name = binding.etTagName.text.toString()
-        val nameError = tagNameValidate(name)
+        val nameError = tagRepository.tagNameValidate(name)
         if (nameError != null) {
             binding.tvError.visibility = View.VISIBLE
             binding.tvError.text = getString(nameError)
@@ -68,32 +68,15 @@ class AddTagDialog : DialogFragment(), ColorSelectedListener {
         }
         val color = adapter.getSelectedColor()
         CoroutineScope(Dispatchers.IO).launch {
-            tagRepository.insert(Tag(name.trim(' '), color.id))
+            tagRepository.insert(name, color.id)
         }
-
         dialog.dismiss()
     }
 
-    private fun tagNameValidate(name: String): Int? {
-        if (name.isEmpty()) return R.string.error_empty_name
-        if (name.length < 2) return R.string.error_short_name
-        if (name.length > 30) return R.string.error_long_name
-        return null
-    }
-
     override fun selectColor(color: AppColorManager.TagColor) {
-        val colorContainer = if (color != AppColorManager.TagColor.COLOR0) resources.getColor(
-            color.colorContainerId,
-            context?.theme
-        ) else AppColorManager.getThemeColor(requireContext(), color.colorContainerId)
-        val colorText = if (color != AppColorManager.TagColor.COLOR0) resources.getColor(
-            color.colorOnContainerId,
-            context?.theme
-        ) else AppColorManager.getThemeColor(requireContext(), color.colorOnContainerId)
-        val colorHint = if (color != AppColorManager.TagColor.COLOR0) resources.getColor(
-            color.colorVariant,
-            context?.theme
-        ) else AppColorManager.getThemeColor(requireContext(), color.colorVariant)
+        val colorContainer = resources.getColor(color.colorContainerId, context?.theme)
+        val colorText = resources.getColor(color.colorOnContainerId, context?.theme)
+        val colorHint = resources.getColor(color.colorVariant, context?.theme)
 
         ObjectAnimator.ofArgb(
             binding.cvBackgroundEt,
@@ -108,7 +91,7 @@ class AddTagDialog : DialogFragment(), ColorSelectedListener {
     private fun initRv() {
         binding.rvTagColor.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvTagColor.addItemDecoration(ItemDecorationAddTagColors())
         binding.rvTagColor.adapter = adapter
     }
-
 }

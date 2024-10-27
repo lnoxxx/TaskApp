@@ -38,6 +38,10 @@ class DataModule {
 
     @Provides
     @Singleton
+    fun provideDateTimeManager() = DateTimeManager()
+
+    @Provides
+    @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(
             context,

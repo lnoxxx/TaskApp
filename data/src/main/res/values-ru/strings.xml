@@ -4,4 +4,8 @@
     <string name="notification_channel_description">Напоминания о ваших задачах</string>
     <string name="notification_title">Не забудьте!</string>
     <string name="notification_default_text">Напоминаем вам о ваших задачах!</string>
+
+    <string name="error_empty_name">Введите название!</string>
+    <string name="error_long_name">Название слишком длинное!</string>
+    <string name="error_short_name">Название слишком короткое!</string>
 </resources>

@@ -1,12 +1,16 @@
 package com.lnoxxdev.data.tasksRepository
 
+import com.lnoxxdev.data.R
 import com.lnoxxdev.data.appDatabase.Task
 import com.lnoxxdev.data.appDatabase.TasksDao
 import com.lnoxxdev.data.dateRepository.DateRepository
 import com.lnoxxdev.data.notification.ReminderManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -33,7 +37,7 @@ class TasksRepository @Inject constructor(
         )
     }
 
-    suspend fun insert(
+    fun createTask(
         name: String,
         date: LocalDate,
         time: LocalTime,
@@ -67,21 +71,28 @@ class TasksRepository @Inject constructor(
             remindWorkId = taskReminderWorkId,
             isDone = false
         )
-        tasksDao.insert(task)
+        CoroutineScope(Dispatchers.IO).launch {
+            insert(task)
+        }
     }
 
-    data class NotificationId(
-        val name: String,
-        val date: LocalDate,
-        val time: LocalTime,
-        val reminderSecondsDelay: Long,
-    )
+    suspend fun delete(id: Int){
+        val task = tasksDao.getTaskById(id)
+        task.remindWorkId?.let {
+            reminderManager.removeNotification(it)
+        }
+        delete(task)
+    }
 
-    suspend fun delete(task: Task) {
+    private suspend fun delete(task: Task) {
         tasksDao.delete(task)
     }
 
-    suspend fun update(task: Task) {
+    private suspend fun insert(task: Task){
+        tasksDao.insert(task)
+    }
+
+    private suspend fun update(task: Task) {
         tasksDao.update(task)
     }
 
@@ -90,11 +101,25 @@ class TasksRepository @Inject constructor(
         update(task.copy(isDone = !task.isDone))
     }
 
-    private fun secondsDelay(date: LocalDate, time: LocalTime): Long {
+    fun secondsDelay(date: LocalDate, time: LocalTime): Long {
         val targetDateTime = LocalDateTime.of(date, time)
         val currentDateTime = LocalDateTime.now()
         var delay = Duration.between(currentDateTime, targetDateTime).seconds
         if (delay < 0) delay = 0
         return delay
     }
+
+    fun taskNameValidate(name: String): Int? {
+        if (name.isEmpty()) return R.string.error_empty_name
+        if (name.length < 2) return R.string.error_short_name
+        if (name.length > 300) return R.string.error_long_name
+        return null
+    }
+
+    data class NotificationId(
+        val name: String,
+        val date: LocalDate,
+        val time: LocalTime,
+        val reminderSecondsDelay: Long,
+    )
 }

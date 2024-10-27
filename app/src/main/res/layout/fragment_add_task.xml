@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btnSaveTask"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/add_task_save_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivIconClose" />
+
+    <ImageView
+        android:id="@+id/ivIconClose"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/cd_close"
+        android:src="@drawable/ic_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSaveTask"
+        app:layout_constraintWidth_max="488dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clAddTaskBottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
+
+            <TextView
+                android:id="@+id/tvAddTaskTitle"
+                style="@style/BaseTextStyle.regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/nav_title_add_task"
+                android:textSize="34sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvTaskName"
+                style="@style/BaseCardViewStyle.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAddTaskTitle">
+
+                <EditText
+                    android:id="@+id/etTaskName"
+                    style="@style/BaseEditTextStyle.MultiLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="none"
+                    android:hint="@string/hint_task_name"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="24dp"
+                    android:textSize="20sp"
+                    tools:ignore="TextContrastCheck" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvError"
+                style="@style/BaseTextStyle.Error"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintEnd_toEndOf="@id/cvTaskName"
+                app:layout_constraintStart_toStartOf="@id/cvTaskName"
+                app:layout_constraintTop_toBottomOf="@id/cvTaskName"
+                tools:text="Tag name must not be null!" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvDateItem"
+                style="@style/BaseCardViewStyle.Filled"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvError">
+
+                <TextView
+                    style="@style/BaseTextStyle.regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="24dp"
+                    android:drawablePadding="4dp"
+                    android:text="@string/add_task_select_date"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/ic_add_task_titile_calendar"
+                    app:drawableTint="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tvTaskDate"
+                    style="@style/BaseTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/shape_surface_highest_container"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="4dp"
+                    android:textSize="20sp"
+                    tools:text="03.06.2024" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvTimeItem"
+                style="@style/BaseCardViewStyle.Filled"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvDateItem">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvTitleTime"
+                        style="@style/BaseTextStyle.regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:drawablePadding="4dp"
+                        android:text="@string/add_task_select_time"
+                        android:textSize="20sp"
+                        app:drawableStartCompat="@drawable/ic_add_task_titile_clock"
+                        app:drawableTint="?attr/colorOnSurfaceVariant"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvTaskTime"
+                        style="@style/BaseTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/shape_surface_highest_container"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="4dp"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="19:47" />
+
+                    <CheckBox
+                        android:id="@+id/cbAllDay"
+                        style="@style/BaseTextStyle.regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="12dp"
+                        android:layout_marginStart="16dp"
+                        android:paddingHorizontal="8dp"
+                        android:text="@string/add_task_all_day"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvTitleTime" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSelectTag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:isScrollContainer="false"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvTimeItem"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_tag" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvReminderItem"
+                style="@style/BaseCardViewStyle.Filled"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvSelectTag"
+                tools:ignore="VisualLintBounds">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTitleReminder"
+                        style="@style/BaseTextStyle.regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:drawablePadding="4dp"
+                        android:text="@string/add_task_reminder"
+                        android:textSize="20sp"
+                        app:drawableStartCompat="@drawable/ic_notification"
+                        app:drawableTint="?attr/colorOnSurfaceVariant"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="8dp">
+
+                        <RadioButton
+                            android:id="@+id/rb5Minutes"
+                            style="@style/BaseRadioButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reminder_5minutes" />
+
+                        <RadioButton
+                            android:id="@+id/rb1Hour"
+                            style="@style/BaseRadioButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reminder_1hour" />
+
+                        <RadioButton
+                            android:id="@+id/rb2Hour"
+                            style="@style/BaseRadioButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reminder_2hour" />
+
+                        <RadioButton
+                            android:id="@+id/rb12Hour"
+                            style="@style/BaseRadioButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxWidth="300dp"
+                            android:text="@string/reminder_12hour" />
+
+                        <RadioButton
+                            android:id="@+id/rbDay"
+                            style="@style/BaseRadioButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reminder_day" />
+
+                        <RadioButton
+                            android:id="@+id/rbNone"
+                            style="@style/BaseRadioButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reminder_none" />
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tvNotificationDelay"
+                        style="@style/BaseTextStyle.regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        tools:text="Напомним через: 1 день 15 часов 13 минут" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+

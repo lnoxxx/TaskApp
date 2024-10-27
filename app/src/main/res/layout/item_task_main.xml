@@ -1,74 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cvItemCard"
-    style="@style/BaseCardViewStyle.Filled"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="12dp"
-    android:layout_marginTop="12dp"
-    app:cardBackgroundColor="?attr/colorSurfaceContainerLow">
+    android:background="@drawable/shape_surface_low_container"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvDateBackground"
+        style="@style/BaseCardViewStyle.Filled"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="?attr/colorSurfaceContainerHigh">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cvDateBackground"
-            style="@style/BaseCardViewStyle.Filled"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/llDates"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="?attr/colorSurfaceContainerHigh"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
 
-
-            <LinearLayout
-                android:id="@+id/llDates"
+            <TextView
+                android:id="@+id/tvDateDay"
+                style="@style/BaseTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="32sp"
+                tools:text="31" />
 
-                <TextView
-                    android:id="@+id/tvDateDay"
-                    style="@style/BaseTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="32sp"
-                    tools:text="31" />
+            <TextView
+                android:id="@+id/tvDayOfWeek"
+                style="@style/BaseTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp"
+                tools:text="Сентября" />
 
-                <TextView
-                    android:id="@+id/tvDayOfWeek"
-                    style="@style/BaseTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="16sp"
-                    tools:text="Сентября" />
+        </LinearLayout>
 
-            </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-        </com.google.android.material.card.MaterialCardView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTasksList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="never"
+        tools:listitem="@layout/item_task_group" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTasksList"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:isScrollContainer="false"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cvDateBackground" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>
 

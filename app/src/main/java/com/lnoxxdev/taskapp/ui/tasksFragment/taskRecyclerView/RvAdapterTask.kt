@@ -8,13 +8,10 @@ import com.lnoxxdev.taskapp.R
 import com.lnoxxdev.taskapp.ui.tasksFragment.CalendarItem
 import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.ViewHolderTaskDay
 import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.ViewHolderTaskMonth
-import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.taskRvAdapters.TaskListener
 
-class RvAdapterTask(
-    private val calendarItems: MutableList<CalendarItem>,
-    private val listener: TaskListener,
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RvAdapterTask(private val listener: TaskListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val calendarItems = mutableListOf<CalendarItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -50,7 +47,8 @@ class RvAdapterTask(
         }
     }
 
-    fun updateCalendarItems(newCalendarItems: List<CalendarItem>) {
+    fun updateCalendarItems(newCalendarItems: List<CalendarItem>): Boolean {
+        val needScrollToToday = calendarItems.isEmpty()
         val diffCallback = CalendarItemsDiffUtil(calendarItems, newCalendarItems)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
@@ -58,6 +56,7 @@ class RvAdapterTask(
         calendarItems.addAll(newCalendarItems)
 
         diffResult.dispatchUpdatesTo(this)
+        return needScrollToToday
     }
 
     override fun getItemViewType(position: Int): Int {

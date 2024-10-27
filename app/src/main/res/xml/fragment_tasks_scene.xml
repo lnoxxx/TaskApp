@@ -9,13 +9,16 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:visibility="gone"
+            android:elevation="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/calendarCard" />
 
         <Constraint
+            android:layout_margin="16dp"
             android:id="@+id/calendarCard"
             android:layout_width="52dp"
+            app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
             android:layout_height="52dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -26,7 +29,8 @@
             android:layout_height="52dp"
             android:contentDescription="@string/cd_calendar"
             android:padding="14dp"
-            android:src="@drawable/ic_calendar_menu"
+            android:src="@drawable/ic_fab_select_date"
+            android:elevation="8dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/calendarCard"
             app:layout_constraintEnd_toEndOf="@id/calendarCard" />
@@ -38,6 +42,7 @@
             android:contentDescription="@string/cd_close"
             android:padding="24dp"
             android:src="@drawable/ic_close"
+            android:elevation="8dp"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/cvCalendar"
             app:layout_constraintStart_toStartOf="@id/cvCalendar" />
@@ -50,12 +55,15 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:visibility="visible"
+            android:elevation="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/calendarCard" />
 
         <Constraint
+            android:layout_margin="16dp"
             android:id="@+id/calendarCard"
+            app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,8 +75,9 @@
             android:id="@+id/ivIconOpenCalendar"
             android:layout_width="52dp"
             android:layout_height="52dp"
+            android:elevation="8dp"
             android:contentDescription="@string/cd_calendar"
-            android:src="@drawable/ic_calendar_menu"
+            android:src="@drawable/ic_fab_select_date"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/calendarCard"
             app:layout_constraintEnd_toEndOf="@id/calendarCard" />
@@ -79,6 +88,7 @@
             android:layout_height="68dp"
             android:contentDescription="@string/cd_close"
             android:padding="24dp"
+            android:elevation="8dp"
             android:src="@drawable/ic_close"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/cvCalendar"

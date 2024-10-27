@@ -1,31 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/BaseCardViewStyle.Filled"
+    style="@style/BaseCardViewStyle.Outlined"
+    app:strokeWidth="2dp"
     android:layout_width="match_parent"
-    android:layout_height="216dp"
-    android:layout_marginHorizontal="12dp"
-    android:layout_marginTop="12dp"
+    android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/black">
 
-    <ImageView
-        android:id="@+id/ivMonth"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.6"
-        android:contentDescription="@string/cd_month_image"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/september" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvMonthName"
-        style="@style/BaseTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        tools:text="Сентябрь 2025" />
+        <ImageView
+            android:id="@+id/ivMonth"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.5"
+            android:contentDescription="@string/cd_month_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/december" />
 
-</androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/tvMonthName"
+            style="@style/BaseTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Сентябрь 2025" />
+
+        <TextView
+            android:id="@+id/tvMonthDescription"
+            style="@style/BaseTextStyle.regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/white"
+            android:alpha="0.8"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMonthName"
+            tools:text="@string/september_description"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

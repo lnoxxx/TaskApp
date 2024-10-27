@@ -13,12 +13,12 @@ data class DateRange(
 class DateRepository {
 
     private val timeStock = 15L
-    private val defaultValue = DateRange(getInitialDateList(), null)
+    private val defaultValue = DateRange(getInitialDateRange(), null)
 
     private val _dateState = MutableStateFlow(defaultValue)
     val dateState: Flow<DateRange> = _dateState.asStateFlow()
 
-    private fun getInitialDateList(): List<LocalDate> {
+    private fun getInitialDateRange(): List<LocalDate> {
         val nowDate = LocalDate.now()
         return createDateList(nowDate.minusDays(timeStock), nowDate.plusDays(timeStock))
     }

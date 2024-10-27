@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/notes"
+    app:startDestination="@id/notesFragment_nav">
+
+    <fragment
+        android:id="@+id/notesFragment_nav"
+        android:name="com.lnoxxdev.taskapp.ui.notesFragment.NotesFragment"
+        android:label="@string/nav_title_notes"
+        tools:layout="@layout/fragment_notes" />
+
+</navigation>

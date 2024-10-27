@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="today_stroke_width">1dp</dimen>
+    <dimen name="today_stroke_width">2dp</dimen>
+    <dimen name="app_base_corner_radius">32dp</dimen>
+    <dimen name="calendar_item_margin">12dp</dimen>
+    <dimen name="color_item_margin">8dp</dimen>
+    <dimen name="tag_item_margin">4dp</dimen>
+    <dimen name="task_margin">8dp</dimen>
+    <dimen name="ic_delete_margin">16dp</dimen>
+    <dimen name="ic_delete_size">24dp</dimen>
 </resources>

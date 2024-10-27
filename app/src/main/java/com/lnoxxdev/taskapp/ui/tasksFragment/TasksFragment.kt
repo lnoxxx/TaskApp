@@ -1,7 +1,6 @@
 package com.lnoxxdev.taskapp.ui.tasksFragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +9,17 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lnoxxdev.taskapp.R
 import com.lnoxxdev.taskapp.databinding.FragmentTasksBinding
+import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.ItemDecorationTaskMainItems
 import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.RvAdapterTask
-import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.taskRvAdapters.TaskListener
+import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.TaskListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -31,7 +34,7 @@ class TasksFragment : Fragment(), TaskListener {
 
     private val viewModel: TasksViewModel by viewModels()
 
-    private var adapter: RvAdapterTask? = null
+    private var adapter = RvAdapterTask(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +51,7 @@ class TasksFragment : Fragment(), TaskListener {
             v.updatePadding(top = inset.top)
             insets
         }
+        recyclerviewInit()
         hideCalendar()
         return binding.root
     }
@@ -75,16 +79,6 @@ class TasksFragment : Fragment(), TaskListener {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        recyclerviewInit()
-        val uiState = viewModel.uiState.value
-        bindUiState(uiState)
-        Log.d("testlog", "${binding.rvTasks.adapter}")
-        Log.d("testlog", "${adapter}")
-    }
-
-
     private fun bindUiState(uiState: TaskFragmentUiState) {
         uiState.calendarItems?.let {
             bindCalendarItems(it, uiState.scrollToPosition)
@@ -92,23 +86,20 @@ class TasksFragment : Fragment(), TaskListener {
     }
 
     private fun bindCalendarItems(calendarItems: List<CalendarItem>, scrollPosition: Int?) {
-        if (adapter == null) {
-            adapter = RvAdapterTask(calendarItems.toMutableList(), this)
-            recyclerviewInit()
-        } else {
-            adapter!!.updateCalendarItems(calendarItems)
-            scrollPosition?.let {
-                scrollToPosition(it)
-            }
+        val todayScroll = adapter.updateCalendarItems(calendarItems)
+        viewModel.uiState.value.todayPosition?.let {
+            if (todayScroll) binding.rvTasks.scrollToPosition(it)
+        }
+        scrollPosition?.let {
+            scrollToPosition(it)
         }
     }
 
     private fun recyclerviewInit() {
         binding.rvTasks.layoutManager = LinearLayoutManager(context)
+        binding.rvTasks.addItemDecoration(ItemDecorationTaskMainItems())
         binding.rvTasks.adapter = adapter
         binding.rvTasks.itemAnimator = null
-        val todayPosition = viewModel.uiState.value.todayPosition ?: 0
-        binding.rvTasks.scrollToPosition(todayPosition)
 
         binding.rvTasks.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -157,23 +148,38 @@ class TasksFragment : Fragment(), TaskListener {
 
     private fun scrollToToday() {
         viewModel.uiState.value.todayPosition?.let {
-            binding.rvTasks.smoothScrollToPosition(it)
+            binding.rvTasks.scrollToPosition(it)
         }
     }
 
     private fun scrollToPosition(position: Int) {
-        binding.rvTasks.smoothScrollToPosition(position)
+        binding.rvTasks.scrollToPosition(position)
         viewModel.scrollFinish()
     }
 
     private fun showAddTaskBottomSheet() {
-        findNavController().navigate(R.id.action_tasksFragment_nav_to_addTaskBottomSheet)
+        val todayDate = LocalDate.now()
+        val action = TasksFragmentDirections.actionTasksFragmentNavToAddTaskBottomSheet(
+            todayDate.dayOfMonth,
+            todayDate.monthValue,
+            todayDate.year
+        )
+        NavHostFragment.findNavController(this).navigate(action)
+    }
+
+    private fun showAddTaskBottomSheet(day: LocalDate) {
+        val action = TasksFragmentDirections.actionTasksFragmentNavToAddTaskBottomSheet(
+            day.dayOfMonth,
+            day.monthValue,
+            day.year
+        )
+        findNavController().navigate(action)
     }
 
     private fun getFirstVisibleItemDateOrNow(): LocalDate {
-        if (adapter == null) return LocalDate.now()
         val pos =
-            (binding.rvTasks.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+            (binding.rvTasks.layoutManager as LinearLayoutManager)
+                .findFirstCompletelyVisibleItemPosition()
         if (pos == -1) return LocalDate.now()
         return when (val item = viewModel.uiState.value.calendarItems?.get(pos)) {
             is CalendarItem.Day -> item.date
@@ -182,7 +188,31 @@ class TasksFragment : Fragment(), TaskListener {
         }
     }
 
+    private fun showDeleteTaskDialog(task: UiTask, returnItem: () -> Unit) {
+        val text = getString(R.string.delete_task_dialog_text, task.name)
+        MaterialAlertDialogBuilder(requireContext())
+            .setIcon(R.drawable.ic_delete_dialog)
+            .setTitle(R.string.delete_task_dialog_title)
+            .setMessage(text)
+            .setPositiveButton(R.string.delete) { _, _ ->
+                viewModel.deleteTask(task)
+            }
+            .setNeutralButton(R.string.cancel) { _, _ -> }
+            .setOnDismissListener {
+                returnItem.invoke()
+            }
+            .show()
+    }
+
     override fun changeDone(task: UiTask) {
         viewModel.changeTaskDoneStatus(task)
+    }
+
+    override fun addTaskToDay(day: LocalDate) {
+        showAddTaskBottomSheet(day)
+    }
+
+    override fun removeTask(task: UiTask, returnItem: () -> Unit) {
+        showDeleteTaskDialog(task, returnItem)
     }
 }

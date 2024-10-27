@@ -5,3 +5,12 @@ plugins {
     alias(libs.plugins.android.ksp) apply false
     alias(libs.plugins.android.hilt) apply false
 }
+
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+    }
+}

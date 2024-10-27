@@ -6,46 +6,36 @@
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvBackgroundEt"
-        style="@style/BaseCardViewStyle"
+        style="@style/BaseCardViewStyle.Filled"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        app:cardBackgroundColor="?attr/colorSurfaceContainerHigh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTagName"
-            style="@style/BaseTextStyle.regular"
+            style="@style/BaseEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autofillHints="none"
-            android:background="@android:color/transparent"
             android:hint="@string/hint_task_name"
             android:imeOptions="actionDone"
-            android:inputType="text|textAutoComplete|textAutoCorrect|textCapSentences|textImeMultiLine"
+            android:inputType="text|textAutoComplete|textAutoCorrect|textCapSentences|textImeMultiLine|textMultiLine"
             android:paddingHorizontal="24dp"
-            android:paddingVertical="16dp"
-            android:textSize="20sp" />
-    </androidx.cardview.widget.CardView>
+            android:paddingVertical="16dp" />
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tvError"
-        style="@style/BaseTextStyle.regular"
+        style="@style/BaseTextStyle.Error"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawablePadding="4dp"
-        android:paddingHorizontal="8dp"
-        android:paddingTop="8dp"
-        android:textColor="?attr/colorError"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:drawableStartCompat="@drawable/ic_error"
-        app:drawableTint="?attr/colorError"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@id/cvBackgroundEt"
         app:layout_constraintStart_toStartOf="@id/cvBackgroundEt"
         app:layout_constraintTop_toBottomOf="@id/cvBackgroundEt"
@@ -60,7 +50,9 @@
         android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvError" />
+        app:layout_constraintTop_toBottomOf="@id/tvError"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_color" />
 
     <Button
         android:id="@+id/btnPositive"

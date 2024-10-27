@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lnoxxdev.taskapp.R
 import com.lnoxxdev.taskapp.ui.tasksFragment.UiTask
+import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.TaskListener
 
 class RvAllDayTaskAdapter(
     private val allDayTaskList: List<UiTask>,

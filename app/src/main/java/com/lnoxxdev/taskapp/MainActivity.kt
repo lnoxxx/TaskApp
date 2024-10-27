@@ -2,10 +2,9 @@ package com.lnoxxdev.taskapp
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+import android.provider.Settings
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
     }
 
-    private fun getNotificationPermission(){
+    private fun getNotificationPermission() {
         val rememberNotificationAllow = getPreferences(Context.MODE_PRIVATE).getBoolean(
             getString(R.string.pref_remember_notification_allow),
             true
@@ -38,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         if (rememberNotificationAllow) notificationPermissionLaunch()
     }
 
+    // TODO check api < 33
     private fun notificationPermissionLaunch() {
         val permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -54,11 +54,12 @@ class MainActivity : AppCompatActivity() {
             .setTitle(R.string.notification_permission_dialog_title)
             .setMessage(R.string.notification_permission_required)
             .setPositiveButton(R.string.allow) { _, _ ->
-                val intent = Intent(ACTION_APPLICATION_DETAILS_SETTINGS)
-                intent.data = Uri.parse("package:$packageName")
+                val intent =
+                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
                 startActivity(intent)
             }
-            .setNeutralButton(R.string.notification_dont_remember) {  _, _ ->
+            .setNeutralButton(R.string.notification_dont_remember) { _, _ ->
                 val sharedPref = getPreferences(Context.MODE_PRIVATE)
                 with(sharedPref.edit()) {
                     putBoolean(getString(R.string.pref_remember_notification_allow), false)

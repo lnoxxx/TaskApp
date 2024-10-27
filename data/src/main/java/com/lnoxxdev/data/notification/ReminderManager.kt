@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 class ReminderManager(private val appContext: Context) {
@@ -18,8 +19,11 @@ class ReminderManager(private val appContext: Context) {
                 .setInputData(data)
                 .setInitialDelay(secondsDelay, TimeUnit.SECONDS)
                 .build()
-        val workId = workRequest.id.toString()
         WorkManager.getInstance(appContext).enqueue(workRequest)
+        val workId = workRequest.id.toString()
         return workId
+    }
+    fun removeNotification(workId: String){
+        WorkManager.getInstance(appContext).cancelWorkById(UUID.fromString(workId))
     }
 }

@@ -6,6 +6,10 @@ import com.lnoxxdev.taskapp.R
 
 object AppColorManager {
 
+    val noTagColorContainerId = com.google.android.material.R.attr.colorSurfaceContainerHigh
+    val noTagColorOnContainerId = com.google.android.material.R.attr.colorOnSurface
+    val noTagColorVariantId = com.google.android.material.R.attr.colorOnSurfaceVariant
+
     fun getThemeColor(context: Context, colorId: Int): Int {
         val typedValue = TypedValue()
         context.theme.resolveAttribute(colorId, typedValue, true)
@@ -14,7 +18,6 @@ object AppColorManager {
 
     fun getColorById(id: Int): TagColor {
         return when (id) {
-            0 -> TagColor.COLOR0
             1 -> TagColor.COLOR1
             2 -> TagColor.COLOR2
             3 -> TagColor.COLOR3
@@ -23,7 +26,7 @@ object AppColorManager {
             6 -> TagColor.COLOR6
             7 -> TagColor.COLOR7
             8 -> TagColor.COLOR8
-            else -> TagColor.COLOR0
+            else -> TagColor.COLOR1
         }
     }
 
@@ -33,12 +36,6 @@ object AppColorManager {
         val colorVariant: Int,
         val id: Int
     ) {
-        COLOR0(
-            com.google.android.material.R.attr.colorSurfaceContainerHigh,
-            com.google.android.material.R.attr.colorOnSurface,
-            com.google.android.material.R.attr.colorOnSurfaceVariant,
-            0
-        ),
         COLOR1(
             R.color.colorCustomColor1Container,
             R.color.colorOnCustomColor1Container,

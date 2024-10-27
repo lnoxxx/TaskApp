@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tasks"
+    app:startDestination="@id/tasksFragment_nav">
+
+    <fragment
+        android:id="@+id/tasksFragment_nav"
+        android:name="com.lnoxxdev.taskapp.ui.tasksFragment.TasksFragment"
+        android:label="@string/nav_title_tasks"
+        tools:layout="@layout/fragment_tasks">
+        <action
+            android:id="@+id/action_tasksFragment_nav_to_addTaskBottomSheet"
+            app:destination="@id/addTaskFragment"
+            app:enterAnim="@anim/action_anim_enter"
+            app:exitAnim="@anim/action_anim_exit"
+            app:popEnterAnim="@anim/action_anim_enter_pop"
+            app:popExitAnim="@anim/action_anim_exit_pop" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.lnoxxdev.taskapp.ui.addTaskFragment.AddTaskFragment"
+        android:label="AddTaskBottomSheet"
+        tools:layout="@layout/fragment_add_task">
+        <argument
+            android:name="day"
+            app:argType="integer" />
+        <argument
+            android:name="month"
+            app:argType="integer" />
+        <argument
+            android:name="year"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>

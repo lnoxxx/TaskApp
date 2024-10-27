@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.android.ksp)
     alias(libs.plugins.android.hilt)
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -42,10 +43,6 @@ android {
 }
 
 dependencies {
-
-    //WorkManager
-    implementation(libs.androidx.work.runtime.ktx)
-
     //flexLayoutManager
     implementation (libs.flexbox)
 
@@ -58,10 +55,6 @@ dependencies {
 
     //Hilt
     implementation(libs.hilt.android)
-    implementation(libs.androidx.legacy.support.v4)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.fragment.ktx)
     ksp(libs.hilt.android.compiler)
 
     //Data module
@@ -70,6 +63,9 @@ dependencies {
     //Fragments
     implementation(libs.androidx.fragment.ktx)
 
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

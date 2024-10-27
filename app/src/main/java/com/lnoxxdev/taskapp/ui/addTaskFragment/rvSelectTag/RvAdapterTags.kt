@@ -1,20 +1,20 @@
 package com.lnoxxdev.taskapp.ui.addTaskFragment.rvSelectTag
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.lnoxxdev.taskapp.R
-import com.lnoxxdev.taskapp.ui.addTaskFragment.AddTaskViewModel
+import com.lnoxxdev.taskapp.ui.addTaskFragment.UiTag
 import com.lnoxxdev.taskapp.ui.addTaskFragment.rvSelectTag.viewHolders.ViewHolderAddTagButton
 import com.lnoxxdev.taskapp.ui.addTaskFragment.rvSelectTag.viewHolders.ViewHolderTag
 
-class RvAdapterTags(
-    private var tagList: List<AddTaskViewModel.UiTag>,
-    private val listener: SelectTagRvListener,
-    private var selectedTagPosition: Int? = null
-) : RecyclerView.Adapter<ViewHolder>() {
+class RvAdapterTags(private val listener: SelectTagRvListener) :
+    RecyclerView.Adapter<ViewHolder>() {
+
+    private var selectedTag: UiTag? = null
+    private var tagList: MutableList<UiTag> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
@@ -41,7 +41,7 @@ class RvAdapterTags(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (holder is ViewHolderTag) holder.bind(
             tagList[position],
-            selectedTagPosition == position,
+            selectedTag == tagList[position],
             listener
         )
         if (holder is ViewHolderAddTagButton) holder.bind(listener)
@@ -54,22 +54,18 @@ class RvAdapterTags(
         }
     }
 
-    //TODO Rework this
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newTagList: List<AddTaskViewModel.UiTag>, selectedTag: AddTaskViewModel.UiTag?) {
-        if (selectedTagPosition != null
-            && selectedTag == tagList[selectedTagPosition!!]
-            && tagList == newTagList) {
-            return
-        }
-        tagList = newTagList
-        if (selectedTag == null) {
-            selectedTagPosition = null
-        } else {
-            val newPosition = tagList.indexOf(selectedTag)
-            selectedTagPosition = newPosition
-        }
-        notifyDataSetChanged()
+    fun updateData(newTagList: List<UiTag>, newSelectedTag: UiTag?) {
+        val oldTagList = tagList
+        val oldSelectedTag = selectedTag
+
+        val diffCallback = TagItemsDiffUtil(oldTagList, newTagList, oldSelectedTag, newSelectedTag)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        tagList.clear()
+        tagList.addAll(newTagList)
+        selectedTag = newSelectedTag
+
+        diffResult.dispatchUpdatesTo(this)
     }
 
     companion object {
@@ -77,3 +73,5 @@ class RvAdapterTags(
         const val ADD_TAG_BUTTON_TYPE = 1
     }
 }
+
+

@@ -19,5 +19,9 @@ class ViewHolderTaskMonth(view: View) : RecyclerView.ViewHolder(view) {
 
         binding.ivMonth.setImageDrawable(monthImage)
         binding.tvMonthName.text = monthText
+
+        val monthDescription =
+            itemView.context.getString(AppMonthManager.getDescriptionOfMonth(month.month))
+        binding.tvMonthDescription.text = monthDescription
     }
 }

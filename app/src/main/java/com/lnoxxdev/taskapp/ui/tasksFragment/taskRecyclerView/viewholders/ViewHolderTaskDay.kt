@@ -2,16 +2,14 @@ package com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders
 
 import android.content.res.ColorStateList
 import android.view.View
-import androidx.annotation.Dimension
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lnoxxdev.taskapp.R
 import com.lnoxxdev.taskapp.databinding.ItemTaskMainBinding
-import com.lnoxxdev.taskapp.dpToPx
 import com.lnoxxdev.taskapp.ui.tasksFragment.CalendarItem
 import com.lnoxxdev.taskapp.ui.tasksFragment.UiTask
+import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.TaskListener
 import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.taskRvAdapters.RvTaskListAdapter
-import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.taskRvAdapters.TaskListener
 import com.lnoxxdev.taskapp.ui.uiDecorManagers.AppColorManager
 import com.lnoxxdev.taskapp.ui.uiDecorManagers.AppWeekManager
 
@@ -26,8 +24,12 @@ class ViewHolderTaskDay(view: View) : RecyclerView.ViewHolder(view) {
         binding.tvDateDay.text = day
         binding.tvDayOfWeek.text = dayOfWeek
 
+        binding.cvDateBackground.setOnClickListener {
+            listener.addTaskToDay(dateState.date)
+        }
+
         changeUniqueDates(dateState)
-        
+
         recyclerViewInit(dateState, listener)
     }
 
@@ -54,12 +56,13 @@ class ViewHolderTaskDay(view: View) : RecyclerView.ViewHolder(view) {
             binding.tvDateDay.setTextColor(textColorToday)
             binding.cvDateBackground.setStrokeColor(ColorStateList.valueOf(textColorToday))
 
-            val strokeWidth = itemView.context.resources.getDimension(R.dimen.today_stroke_width).dpToPx()
+            val strokeWidth =
+                itemView.context.resources.getDimension(R.dimen.today_stroke_width).toInt()
             binding.cvDateBackground.strokeWidth = strokeWidth
         }
     }
 
-    private fun recyclerViewInit(dateState: CalendarItem.Day, listener: TaskListener){
+    private fun recyclerViewInit(dateState: CalendarItem.Day, listener: TaskListener) {
         if (dateState.tasks == null) {
             binding.rvTasksList.visibility = View.GONE
         } else {

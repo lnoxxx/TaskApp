@@ -2,6 +2,18 @@
 <resources>
     <string name="app_name">Diary</string>
 
+    <string name="january_description">January is the first month of the year. It\'s typically the coldest month of the year in the Northern Hemisphere. Days are short and nights are long. Nature sleeps under a thick blanket of snow. Many people celebrate the New Year in January, a time of gifts, fun, and family gatherings.</string>
+    <string name="february_description">February is the second month of the year and is often seen as a continuation of winter. It is known for its short days and long nights. February continues to have cold temperatures, although there can be occasional thaws. This month is also famous for Valentine\'s Day, a day for lovers.</string>
+    <string name="march_description">March is the first month of spring. It\'s a time of change: the snow melts, the first patches of bare ground appear, and buds swell on the trees. Days become noticeably longer, and the sun shines brighter. In March, nature awakens from its winter sleep, and everything around comes alive.</string>
+    <string name="april_description">April is the second month of spring, when nature blooms in all its glory. Trees are covered in fresh greenery, flowers blossom, and birds return from warmer climates. The weather becomes warmer, although night frosts are still not uncommon. April is a month of renewal and rebirth.</string>
+    <string name="may_description">May is perhaps the most beloved month for many. It\'s a time when nature blooms in full force. Trees are covered in white blossoms, meadows are covered in lush greenery, and the air is filled with the scent of flowers. Days become long and warm, and nights are short and bright. May is a month of holidays, picnics, and the beginning of summer.</string>
+    <string name="june_description">June is the first month of summer, and you can feel it in every cell! The sun shines brightly and for a long time, days become the longest. Nature blooms in vibrant colors: meadows are covered with colorful flowers, trees are drowning in greenery. June is a time for vacations, picnics, swimming in rivers and lakes. It\'s the warmest and sunniest month of the year.</string>
+    <string name="july_description">July is the hottest month of summer. The sun shines mercilessly, days are long and bright, and nights are short. Nature reaches its peak: the grass is juicy and green, flowers bloom in full force, and many fruit trees are already covered with juicy fruits. July is a time for vacations, beaches, barbecues, and unforgettable summer adventures.</string>
+    <string name="august_description">August is the last month of summer. Although the sun begins to shine a little less than in July, August remains a warm and sunny month. Nature gradually prepares for autumn: leaves on the trees begin to turn yellow, and days become shorter. However, August is still full of bright colors and summer pleasures. It\'s a great time to relax in nature, pick mushrooms and berries.</string>
+    <string name="september_description">September is the first month of autumn. It\'s a time when nature begins to prepare for winter. The leaves on the trees gradually change color, turning yellow, orange, and red. Days become shorter, and nights longer. However, September still pleases with warm sunny days and Indian summer. It\'s a wonderful time for walks in the forest, picking mushrooms and berries.</string>
+    <string name="october_description">October is the second month of autumn, often called "muddy" due to rains and mud. Trees shed their leaves, painting forests in bright autumn colors. Days become noticeably shorter, nights longer and colder. The weather becomes increasingly changeable: one moment the sun is shining, the next it is raining. October is a time for harvesting and preparing for winter.</string>
+    <string name="november_description">November is the month when autumn comes into its own. Days become shorter and colder, nights longer and darker. Leaves fall from the trees, exposing bare branches. Rains and fogs become frequent guests. Nature prepares for winter hibernation. November is a month of thoughtfulness and preparation for winter holidays.</string>
+    <string name="december_description">December is the last month of the year, wrapped in an atmosphere of magic and celebration. It is a time when nature falls asleep, and people prepare for the New Year. Days become the shortest of the year, and nights are the longest. The first snow falls, covering the ground with a fluffy white blanket. December is a month of family holidays, cozy evenings by the fireplace, and of course, New Year\'s miracles.</string>
     <string name="nav_title_tasks">Tasks</string>
     <string name="nav_title_notes">Notes</string>
     <string name="nav_title_add_task">Create task</string>
@@ -34,16 +46,13 @@
     <string name="cancel">Cancel</string>
     <string name="add_tag_dialog_add">Create</string>
     <string name="add_tag_dialog_title">Create tag</string>
-    <string name="error_empty_name">Enter the name!</string>
-    <string name="error_long_name">The title is too long!</string>
-    <string name="error_short_name">The title is too short!</string>
     <string name="add_task_save_button">Save</string>
-    <string name="reminder_1hour">1 hour</string>
-    <string name="reminder_2hour">2 hours</string>
-    <string name="reminder_12hour">12 hours</string>
-    <string name="reminder_day">Day</string>
+    <string name="reminder_5minutes">in 5 minutes</string>
+    <string name="reminder_1hour">in 1 hour</string>
+    <string name="reminder_2hour">in 2 hours</string>
+    <string name="reminder_12hour">in 12 hours</string>
+    <string name="reminder_day">in day</string>
     <string name="reminder_none">None</string>
-
     <string name="week_day_1_monday">Monday</string>
     <string name="week_day_2_tuesday">Tuesday</string>
     <string name="week_day_3_wednesday">Wednesday</string>
@@ -52,19 +61,22 @@
     <string name="week_day_6_saturday">Saturday</string>
     <string name="week_day_7_sunday">Sunday</string>
     <string name="unknown_week">Unknown</string>
-
     <string name="pref_remember_notification_allow">notifallow</string>
-
     <string name="notification_permission_required">Please grant notification permissions to be reminded of your tasks.</string>
     <string name="allow">Allow</string>
     <string name="notification_dont_remember">Don\'t remind me</string>
     <string name="notification_permission_dialog_title">Allow notifications!</string>
-
     <string name="add_task_reminder_delay">Reminder in: %1$sd, %2$sh, %3$sm</string>
     <string name="today">Today</string>
     <string name="new_week">New week</string>
     <string name="day_task_empty">You have no tasks for today!</string>
     <string name="fab_today">Today</string>
-    <string name="menu_calendar">Calendar</string>
     <string name="cd_calendar">Calendar</string>
+    <string name="cd_menu">more</string>
+    <string name="cd_done">done</string>
+    <string name="menu_settings">Settings</string>
+    <string name="cd_color">Color</string>
+    <string name="delete_task_dialog_title">Delete task?</string>
+    <string name="delete_task_dialog_text">Once deleted, task %1s cannot be restored.</string>
+    <string name="delete">Delete</string>
 </resources>

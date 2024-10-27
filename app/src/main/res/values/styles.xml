@@ -4,7 +4,8 @@
 <!--    TOOLBAR-->
 
     <style name="BaseToolBarStyle">
-
+        <item name="android:background">?attr/colorSurfaceContainerLow</item>
+        <item name="android:paddingBottom">6dp</item>
     </style>
 
     <style name="BaseToolBarStyle.Centered">
@@ -14,32 +15,29 @@
 <!--    CARDS-->
 
     <style name="BaseCardViewStyle">
-        <item name="cardCornerRadius">32dp</item>
+        <item name="cardCornerRadius">@dimen/app_base_corner_radius</item>
         <item name="cardElevation">0dp</item>
         <item name="cardBackgroundColor">?attr/colorSurfaceContainer</item>
     </style>
 
-    <style name="BaseCardViewStyle.OnSurfaceHigh">
-        <item name="cardBackgroundColor">?attr/colorSurfaceContainerHigh</item>
-    </style>
-
     <style name="BaseCardViewStyle.Outlined" parent="Widget.Material3.CardView.Outlined">
-        <item name="cardCornerRadius">32dp</item>
+        <item name="cardCornerRadius">@dimen/app_base_corner_radius</item>
         <item name="cardElevation">0dp</item>
         <item name="cardBackgroundColor">?attr/colorSurfaceContainer</item>
     </style>
 
     <style name="BaseCardViewStyle.Filled" parent="Widget.Material3.CardView.Filled">
-        <item name="cardCornerRadius">32dp</item>
+        <item name="cardCornerRadius">@dimen/app_base_corner_radius</item>
         <item name="cardElevation">0dp</item>
         <item name="cardBackgroundColor">?attr/colorSurfaceContainer</item>
     </style>
 
     <style name="BaseCardViewStyle.Elevated" parent="Widget.Material3.CardView.Elevated">
-        <item name="cardCornerRadius">32dp</item>
+        <item name="cardCornerRadius">@dimen/app_base_corner_radius</item>
         <item name="cardElevation">6dp</item>
         <item name="cardBackgroundColor">?attr/colorSurfaceContainer</item>
     </style>
+
 <!--    TEXT-->
 
     <style name="BaseTextStyle">
@@ -67,11 +65,30 @@
         <item name="fontFamily">@font/app_thin</item>
     </style>
 
+    <style name="BaseTextStyle.Error" parent="BaseTextStyle.regular">
+        <item name="android:textColor">?attr/colorError</item>
+        <item name="drawableStartCompat">@drawable/ic_error</item>
+        <item name="drawableTint">?attr/colorError</item>
+        <item name="android:drawablePadding">4dp</item>
+    </style>
+
 <!--    RADIO BUTTON-->
 
-    <style name="BaseRadioButtonStyle">
+    <style name="BaseRadioButtonStyle" parent="Widget.Material3.CompoundButton.RadioButton">
         <item name="android:paddingHorizontal">8dp</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+<!--    EDIT TEXT-->
+
+    <style name="BaseEditTextStyle" parent="BaseTextStyle.regular">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:inputType">text|textAutoComplete|textAutoCorrect|textCapSentences</item>
+    </style>
+
+    <style name="BaseEditTextStyle.MultiLine">
+        <item name="android:inputType">text|textAutoComplete|textAutoCorrect|textCapSentences|textImeMultiLine|textMultiLine</item>
     </style>
 
 <!--    BOTTOM SHEET-->

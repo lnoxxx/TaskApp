@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/calendar_menu"
-        android:icon="@drawable/ic_calendar_menu"
-        android:title="@string/menu_calendar"
+        android:id="@+id/settings_toolbar_task_menu"
+        android:icon="@drawable/ic_toolbar_tasks_settings"
+        android:title="@string/menu_settings"
         app:showAsAction="always" />
 </menu>
