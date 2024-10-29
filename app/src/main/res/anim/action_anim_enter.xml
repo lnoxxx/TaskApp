@@ -3,11 +3,11 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:anim/accelerate_decelerate_interpolator">
     <alpha
-        android:duration="250"
+        android:duration="200"
         android:fromAlpha="0"
         android:toAlpha="1" />
     <translate
-        android:duration="250"
+        android:duration="200"
         android:fromYDelta="25%"
         android:toYDelta="0%" />
 </set>

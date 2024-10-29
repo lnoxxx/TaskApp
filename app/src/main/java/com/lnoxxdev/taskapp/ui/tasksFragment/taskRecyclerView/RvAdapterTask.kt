@@ -9,7 +9,8 @@ import com.lnoxxdev.taskapp.ui.tasksFragment.CalendarItem
 import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.ViewHolderTaskDay
 import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.ViewHolderTaskMonth
 
-class RvAdapterTask(private val listener: TaskListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RvAdapterTask(private val listener: TaskListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val calendarItems = mutableListOf<CalendarItem>()
 
@@ -18,7 +19,7 @@ class RvAdapterTask(private val listener: TaskListener) : RecyclerView.Adapter<R
             DAY_VIEW_TYPE -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_task_main, parent, false)
-                ViewHolderTaskDay(view)
+                ViewHolderTaskDay(view, listener)
             }
 
             MONTH_VIEW_TYPE -> {
@@ -37,7 +38,7 @@ class RvAdapterTask(private val listener: TaskListener) : RecyclerView.Adapter<R
         when (holder) {
             is ViewHolderTaskDay -> {
                 val day = calendarItems[position] as CalendarItem.Day
-                holder.bind(day, listener)
+                holder.bind(day)
             }
 
             is ViewHolderTaskMonth -> {

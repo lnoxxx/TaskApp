@@ -9,21 +9,24 @@ data class TaskFragmentUiState(
 )
 
 sealed class CalendarItem {
-
     data class Day(
         val date: LocalDate,
-        val tasks: List<UiTask>?,
+        val tasks: List<UiTask>,
+        val groupedTasks: List<TasksGroup>,
         val isToday: Boolean,
         val dayOfWeek: Int,
-        val isPastDay: Boolean,
     ) : CalendarItem()
 
     data class Month(
         val month: Int,
         val year: Int,
-        val isPastMonth: Boolean,
     ) : CalendarItem()
 }
+
+data class TasksGroup(
+    val allDay: Boolean,
+    val tasks: List<UiTask>,
+)
 
 data class UiTask(
     val id: Int,

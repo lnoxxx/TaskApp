@@ -5,10 +5,17 @@ import android.util.TypedValue
 import com.lnoxxdev.taskapp.R
 
 object AppColorManager {
-
     val noTagColorContainerId = com.google.android.material.R.attr.colorSurfaceContainerHigh
     val noTagColorOnContainerId = com.google.android.material.R.attr.colorOnSurface
     val noTagColorVariantId = com.google.android.material.R.attr.colorOnSurfaceVariant
+
+    val doneColorContainerId = com.google.android.material.R.attr.colorSurfaceVariant
+    val doneColorOnContainerId = com.google.android.material.R.attr.colorOnSurfaceVariant
+    val doneColorVariantId = com.google.android.material.R.attr.colorOnSurfaceVariant
+
+    val colorOnSurface = com.google.android.material.R.attr.colorOnSurface
+    val colorPrimary = com.google.android.material.R.attr.colorPrimary
+    val colorError = com.google.android.material.R.attr.colorError
 
     fun getThemeColor(context: Context, colorId: Int): Int {
         val typedValue = TypedValue()

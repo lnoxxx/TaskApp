@@ -1,6 +1,5 @@
 package com.lnoxxdev.taskapp.ui.addTaskFragment.rvSelectTag.viewHolders
 
-import android.util.Log
 import android.view.View
 import android.view.animation.OvershootInterpolator
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -18,7 +17,6 @@ class ViewHolderTag(view: View) : ViewHolder(view) {
         binding.tvTagName.setTextColor(textColor)
         binding.tvTagName.text = tag.name
         //anim
-
         itemView.alpha = 0.5f
         itemView.scaleX = 1f
         itemView.scaleY = 1f
@@ -31,7 +29,6 @@ class ViewHolderTag(view: View) : ViewHolder(view) {
                 alpha(1f)
             }
         }
-        Log.d("testlog", binding.cvTagCard.alpha.toString())
         //click listener
         itemView.setOnClickListener {
             listener.changeSelectedTag(if (selected) null else tag)

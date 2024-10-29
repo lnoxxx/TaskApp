@@ -1,4 +1,4 @@
-package com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.taskRvAdapters
+package com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.tasksGroups
 
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -17,7 +17,6 @@ abstract class SwipeToDelete : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper
     ): Boolean {
         return false
     }
-
 
     override fun onChildDraw(
         c: Canvas,

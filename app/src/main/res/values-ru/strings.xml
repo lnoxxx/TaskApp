@@ -42,7 +42,7 @@
     <string name="add_task_reminder">Напоминание</string>
     <string name="add_task_on_reminder">Включить напоминание</string>
     <string name="add_task_select_tag">Выберете тег:</string>
-    <string name="add_tag">Создать тег</string>
+    <string name="add_tag">Создать новый тег</string>
     <string name="cancel">Отмена</string>
     <string name="add_tag_dialog_add">Создать</string>
     <string name="add_tag_dialog_title">Создать тег</string>

@@ -119,6 +119,7 @@ class AddTaskFragment : Fragment(), SelectTagRvListener {
         }
         bindRadioButton(uiState.reminderTime)
         bindReminderDelay(uiState.reminderSecondsDelay)
+        changeNameTextViewColor(uiState.selectedTag?.color)
     }
 
     private fun bindDate(date: LocalDate) {
@@ -265,7 +266,6 @@ class AddTaskFragment : Fragment(), SelectTagRvListener {
 
     override fun changeSelectedTag(tag: UiTag?) {
         viewmodel.changeSelectedTag(tag)
-        changeNameTextViewColor(tag?.color)
     }
 
     private fun changeNameTextViewColor(color: AppColorManager.TagColor?) {

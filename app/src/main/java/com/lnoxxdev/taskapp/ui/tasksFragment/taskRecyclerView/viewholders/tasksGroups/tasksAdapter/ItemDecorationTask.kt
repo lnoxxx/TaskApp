@@ -1,4 +1,4 @@
-package com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.taskRvAdapters
+package com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.tasksGroups.tasksAdapter
 
 import android.graphics.Rect
 import android.view.View

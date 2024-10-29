@@ -1,4 +1,4 @@
-package com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.taskRvAdapters
+package com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.viewholders.tasksGroups.tasksAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,11 +7,10 @@ import com.lnoxxdev.taskapp.R
 import com.lnoxxdev.taskapp.ui.tasksFragment.UiTask
 import com.lnoxxdev.taskapp.ui.tasksFragment.taskRecyclerView.TaskListener
 
-class RvTimeTaskAdapter(
-    private val timeTaskList: List<UiTask>,
+class RvTaskAdapter(
     private val listener: TaskListener,
-) :
-    RecyclerView.Adapter<ViewHolderTask>() {
+    private val taskList: List<UiTask>
+) : RecyclerView.Adapter<ViewHolderTask>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderTask {
         val view =
@@ -19,9 +18,9 @@ class RvTimeTaskAdapter(
         return ViewHolderTask(view)
     }
 
-    override fun getItemCount() = timeTaskList.size
+    override fun getItemCount() = taskList.size
 
     override fun onBindViewHolder(holder: ViewHolderTask, position: Int) {
-        holder.bind(timeTaskList[position], listener)
+        holder.bind(taskList[position], listener)
     }
 }

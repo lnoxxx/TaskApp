@@ -42,7 +42,7 @@
     <string name="add_task_reminder">Reminder</string>
     <string name="add_task_on_reminder">Turn on reminder</string>
     <string name="add_task_select_tag">Select tag:</string>
-    <string name="add_tag">Create tag</string>
+    <string name="add_tag">Create new tag</string>
     <string name="cancel">Cancel</string>
     <string name="add_tag_dialog_add">Create</string>
     <string name="add_tag_dialog_title">Create tag</string>

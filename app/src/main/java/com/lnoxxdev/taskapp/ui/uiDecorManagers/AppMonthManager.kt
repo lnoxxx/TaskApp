@@ -3,7 +3,6 @@ package com.lnoxxdev.taskapp.ui.uiDecorManagers
 import com.lnoxxdev.taskapp.R
 
 object AppMonthManager {
-
     fun getImageOfMonth(month: Int): Int {
         return when (month) {
             1 -> R.drawable.january

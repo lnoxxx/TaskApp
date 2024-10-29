@@ -2,6 +2,7 @@ package com.lnoxxdev.taskapp.ui.tasksFragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lnoxxdev.data.DateTimeManager
 import com.lnoxxdev.data.appDatabase.Task
 import com.lnoxxdev.data.dateRepository.DateRepository
 import com.lnoxxdev.data.tagRepository.TagRepository
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class TasksViewModel @Inject constructor(
     private val dataRepository: DateRepository,
     private val tasksRepository: TasksRepository,
-    private val tagRepository: TagRepository
+    private val tagRepository: TagRepository,
+    private val dateTimeManager: DateTimeManager,
 ) : ViewModel() {
 
     private val defaultState = TaskFragmentUiState(
@@ -40,14 +42,22 @@ class TasksViewModel @Inject constructor(
                 tasksRepository.tasks,
                 tagRepository.tags
             ) { dateState, taskList, tagList ->
+                // map of tags - id to UiTag
                 val tagMap = tagList.associate { it.id to UiTag(it.id, it.colorId, it.name) }
+                // map of task - LocalDate to UiTask
                 val taskMap = createTaskMap(taskList, tagMap)
+                // createCalendarItemList
                 val calendarItems = dateListToCalendarItemsList(dateState.dateList, taskMap)
+
+                //find selectedDatePosition if selected
                 val selectedDate = dateState.selectedDate
-                val scrollPosition: Int? = if (selectedDate != null) findPositionInCalendarItems(
-                    selectedDate,
-                    calendarItems
-                ) else null
+                val scrollPosition: Int? =
+                    if (selectedDate != null) findPositionInCalendarItems(
+                        selectedDate,
+                        calendarItems
+                    ) else null
+
+                // return updated ui state
                 _uiState.value.copy(
                     calendarItems = calendarItems,
                     scrollToPosition = scrollPosition
@@ -78,46 +88,53 @@ class TasksViewModel @Inject constructor(
         )
     }
 
-    private suspend fun emitNewState(newState: TaskFragmentUiState) {
-        val calendarItems = newState.calendarItems
-        val todayPosition = if (calendarItems != null) findPositionInCalendarItems(
-            LocalDate.now(),
-            calendarItems
-        ) else null
-        val state = newState.copy(todayPosition = todayPosition)
-        _uiState.emit(state)
-    }
-
-    fun loadFeatureDays() {
-        dataRepository.extendDateFuture()
-    }
-
-    fun loadPastDays() {
-        dataRepository.extendDatePast()
-    }
-
     private fun dateListToCalendarItemsList(
         dateList: List<LocalDate>,
         taskMap: Map<LocalDate, List<UiTask>>
     ): List<CalendarItem> {
         val result = mutableListOf<CalendarItem>()
+        val today = dateTimeManager.getNowDate()
+
         for (day in dateList) {
+            var tasks = taskMap[day]
+            val groupedTasks = if (tasks != null) {
+                val allDayGroup = TasksGroup(true, tasks.filter { it.allDay })
+                val defaultGroups = groupDefaultTasks(tasks).toMutableList()
+                defaultGroups.add(0, allDayGroup)
+                defaultGroups
+            } else {
+                tasks = listOf()
+                listOf()
+            }
+
             result.add(
                 CalendarItem.Day(
-                    day,
-                    taskMap[day],
-                    day == LocalDate.now(),
-                    day.dayOfWeek.value,
-                    day.isBefore(LocalDate.now()),
+                    date = day,
+                    tasks = tasks,
+                    groupedTasks = groupedTasks,
+                    isToday = day == today,
+                    dayOfWeek = day.dayOfWeek.value,
                 )
             )
+
             if (day.isLastInMonthDay()) {
                 val month = day.plusDays(1).month
                 val year = day.plusDays(1).year
-                result.add(CalendarItem.Month(month.value, year, day.isBefore(LocalDate.now())))
+                result.add(CalendarItem.Month(month.value, year))
             }
         }
         return result
+    }
+
+    private fun groupDefaultTasks(task: List<UiTask>): List<TasksGroup> {
+        val defaultTasks = task
+            .filter { !it.allDay }
+            .groupBy { it.hour to it.minutes }
+            .toSortedMap(
+                compareBy({ it.first }, { it.second })
+            )
+        val groups = defaultTasks.values.toList().map { TasksGroup(false, it) }
+        return groups
     }
 
     private fun findPositionInCalendarItems(date: LocalDate, list: List<CalendarItem>): Int? {
@@ -128,6 +145,25 @@ class TasksViewModel @Inject constructor(
             }
         }
         return null
+    }
+
+    private suspend fun emitNewState(newState: TaskFragmentUiState) {
+        //change today position in new list
+        val calendarItems = newState.calendarItems
+        val today = dateTimeManager.getNowDate()
+        val todayPosition =
+            if (calendarItems != null) findPositionInCalendarItems(today, calendarItems) else null
+
+        val state = newState.copy(todayPosition = todayPosition)
+        _uiState.emit(state)
+    }
+
+    fun loadFeatureDays() {
+        dataRepository.extendDateFuture()
+    }
+
+    fun loadPastDays() {
+        dataRepository.extendDatePast()
     }
 
     fun changeTaskDoneStatus(task: UiTask) {
