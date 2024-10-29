@@ -19,15 +19,15 @@ class ViewHolderTaskDay(view: View, private val listener: TaskListener) :
     // colors
     private val textColorDefault = AppColorManager.getThemeColor(
         itemView.context,
-        AppColorManager.colorOnSurface
+        AppColorManager.colorDateDefault
     )
     private val textColorToday = AppColorManager.getThemeColor(
         itemView.context,
-        AppColorManager.colorPrimary
+        AppColorManager.colorDateToday
     )
     private val textColorWeekend = AppColorManager.getThemeColor(
         itemView.context,
-        AppColorManager.colorError
+        AppColorManager.colorDateWeekend
     )
 
     // stroke

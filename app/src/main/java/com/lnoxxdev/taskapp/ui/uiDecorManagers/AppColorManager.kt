@@ -13,9 +13,9 @@ object AppColorManager {
     val doneColorOnContainerId = com.google.android.material.R.attr.colorOnSurfaceVariant
     val doneColorVariantId = com.google.android.material.R.attr.colorOnSurfaceVariant
 
-    val colorOnSurface = com.google.android.material.R.attr.colorOnSurface
-    val colorPrimary = com.google.android.material.R.attr.colorPrimary
-    val colorError = com.google.android.material.R.attr.colorError
+    val colorDateDefault = com.google.android.material.R.attr.colorOnSurface
+    val colorDateToday = com.google.android.material.R.attr.colorPrimary
+    val colorDateWeekend = com.google.android.material.R.attr.colorError
 
     fun getThemeColor(context: Context, colorId: Int): Int {
         val typedValue = TypedValue()
